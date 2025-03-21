@@ -1,0 +1,601 @@
+/* General Container */
+.movies-container {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 30px 20px;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Location Modal */
+.location-modal .modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.location-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.location-button {
+  background-color: #ff4444 !important;
+  border: none !important;
+  padding: 12px 25px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
+.location-button:hover {
+  background-color: #cc0000 !important;
+  transform: scale(1.05) !important;
+}
+
+/* Selected Location */
+.selected-location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.selected-location .map-icon {
+  color: #ff4444;
+}
+
+.selected-location h3 {
+  color: #ff4444;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Search Form */
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #ff4444;
+  border-radius: 25px 0 0 25px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #cc0000;
+  outline: none;
+}
+
+.search-button {
+  background-color: #ff4444;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #cc0000;
+}
+
+.search-button svg {
+  color: #fff;
+}
+
+/* Loading, Error States */
+.loading, .error {
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+}
+
+.loading {
+  color: #ff4444;
+}
+
+.error {
+  color: #dc3545;
+}
+
+/* Movie Section */
+.movie-section {
+  margin-bottom: 50px;
+}
+
+.movie-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff4444;
+  margin-bottom: 25px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* Movie Grid */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+/* Movie Card */
+.movie-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card-inner {
+  padding: 15px;
+  text-align: center;
+}
+
+.movie-poster {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff4444;
+  margin: 10px 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-year {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.movie-details {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.movie-details span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.star-icon {
+  color: #ff4444;
+}
+
+.calendar-icon {
+  color: #666;
+}
+
+/* Search Results Popup */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+/* Empty Search Popup */
+.empty-search-popup .modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Review Error Popup */
+.review-error-popup .modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ff4444;
+}
+
+/* No Cinemas Popup */
+.no-cinemas-popup .modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ff4444;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .movie-section h2 {
+    font-size: 24px;
+  }
+
+  .movie-title {
+    font-size: 16px;
+  }
+
+  .movie-poster img {
+    height: 200px;
+  }
+
+  .search-input {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .search-button {
+    padding: 10px 15px;
+  }
+}
+
+/* MovieDetails Styles */
+.movie-details-container {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 40px 20px;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Loading, Error, Not Found States */
+.loading, .error, .not-found {
+  text-align: center;
+  font-size: 24px;
+  padding: 50px;
+}
+
+.loading {
+  color: #ff4444;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.not-found {
+  color: #6c757d;
+}
+
+/* Location Header */
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.location-header h3 {
+  color: #ff4444;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Movie Info Section */
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .movie-info {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.movie-poster {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 20px;
+  border: 4px solid #ff4444;
+  box-shadow: 0 10px 25px rgba(255, 68, 68, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-poster:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(255, 68, 68, 0.5);
+}
+
+.movie-details {
+  flex: 1;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .movie-details {
+    text-align: left;
+  }
+}
+
+.movie-details h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ff4444;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+  .movie-details h1 {
+    font-size: 48px;
+  }
+}
+
+.plot {
+  font-size: 16px;
+  color: #d1d1d1;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.rating-release {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .rating-release {
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+  }
+}
+
+.rating, .release {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2c2c2c;
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cinemas Section */
+.cinemas-section {
+  margin-top: 50px;
+}
+
+.cinemas-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff4444;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.cinemas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.cinema-card {
+  background-color: #2c2c2c;
+  padding: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cinema-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(255, 68, 68, 0.4);
+}
+
+.cinema-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cinema-card h3 {
+  color: #ff4444;
+  font-size: 18px;
+  margin: 10px 0 5px;
+}
+
+.cinema-card p {
+  color: #d1d1d1;
+  font-size: 14px;
+}
+
+/* Reviews Section */
+.reviews-section {
+  margin-top: 60px;
+}
+
+.reviews-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff4444;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.review-form {
+  margin-bottom: 40px;
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: 2px solid #ff4444;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  font-size: 16px;
+  min-height: 150px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-form textarea:focus {
+  border-color: #cc0000;
+  box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+  outline: none;
+}
+
+.rating-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.rating-input label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #d1d1d1;
+}
+
+.star-filled {
+  color: #ff4444;
+  cursor: pointer;
+}
+
+.star-empty {
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.review-form button {
+  background-color: #ff4444;
+  color: #ffffff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.review-form button:hover {
+  background-color: #cc0000;
+  transform: translateY(-3px);
+}
+
+.review-card {
+  background-color: #2c2c2c;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in;
+}
+
+.review-card p {
+  font-size: 16px;
+  color: #d1d1d1;
+  line-height: 1.6;
+}
+
+.review-rating {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.review-user {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments for MovieDetails */
+@media (max-width: 480px) {
+  .movie-details h1 {
+    font-size: 28px;
+  }
+
+  .plot {
+    font-size: 14px;
+  }
+
+  .cinemas-section h2, .reviews-section h2 {
+    font-size: 24px;
+  }
+
+  .cinema-card h3 {
+    font-size: 16px;
+  }
+
+  .review-form button {
+    font-size: 16px;
+    padding: 12px 25px;
+  }
+}

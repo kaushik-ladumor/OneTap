@@ -3,13 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^3.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mapbox/mapbox-gl-directions": "^4.3.1",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.3",
+    "@react-google-maps/api": "^2.20.6",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "@turf/turf": "^7.2.0",
+    "axios": "^1.8.2",
+    "bootstrap": "^5.3.3",
+    "framer-motion": "^12.5.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.477.0",
+    "mapbox-gl": "^3.10.0",
+    "path-browserify": "^1.0.1",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
+    "react-cookie": "^7.2.2",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-map-gl-geocoder": "^2.2.0",
+    "react-router-dom": "^7.3.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^11.0.5",
+    "styled-components": "^6.1.16",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -35,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "browser": {
+    "fs": false
   }
 }
