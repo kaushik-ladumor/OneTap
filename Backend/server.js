@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-require("./Models/db"); // Ensure MongoDB connection
+require("./Models/db");
 const AuthRouter = require("./Routes/AuthRouter");
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // CORS Configuration (Fixed)
 app.use(
   cors({
-    origin: "http://localhost:3000/", // Ensure this matches frontend
+    origin: "http://localhost:3000", // Remove trailing slash
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

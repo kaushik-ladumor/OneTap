@@ -25,7 +25,9 @@ const Signup = () => {
     }
 
     try {
-      const url = "http://localhost:5000/auth/signup"; // Ensure correct backend URL
+      const url = "http://localhost:5000/auth/signup";
+      console.log("Sending request to:", url, signupInfo); // Debugging
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -35,6 +37,8 @@ const Signup = () => {
       });
 
       const result = await response.json();
+      console.log(" Response received:", result); // Debugging
+
       if (response.ok) {
         toast.success("Signup Successful! Redirecting to login...");
         setTimeout(() => navigate("/login"), 2000);
@@ -42,6 +46,7 @@ const Signup = () => {
         toast.error(result.message || "Signup failed, please try again.");
       }
     } catch (error) {
+      console.error("❌ Signup error:", error);
       toast.error("Server error, please try again later.");
     }
   };
