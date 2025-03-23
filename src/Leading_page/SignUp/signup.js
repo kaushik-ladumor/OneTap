@@ -1,100 +1,90 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState({
+  const [signupInfo, setSignupInfo] = useState({
+    username: "",
     email: "",
     password: "",
-    username: "",
   });
-  const { email, password, username } = inputValue;
-  const handleOnChange = (e) => {
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
+    setSignupInfo({ ...signupInfo, [name]: value });
   };
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-
-  const handleSubmit = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
+    const { username, email, password } = signupInfo;
+
+    if (!username || !email || !password) {
+      return toast.error("Username, Email, and Password are required");
+    }
+
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/signup",
-        {
-          ...inputValue,
+      const url = "http://localhost:5000/auth/signup"; // Ensure correct backend URL
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        { withCredentials: true }
-      );
-      const { success, message } = data;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+        body: JSON.stringify(signupInfo),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        toast.success("Signup Successful! Redirecting to login...");
+        setTimeout(() => navigate("/login"), 2000);
       } else {
-        handleError(message);
+        toast.error(result.message || "Signup failed, please try again.");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Server error, please try again later.");
     }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-      username: "",
-    });
   };
 
   return (
-    <div className="form_container">
-      <h2>Signup Account</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSignup}>
         <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            placeholder="Enter Your Username"
+            name="username"
+            value={signupInfo.username}
+            onChange={handleChange}
+            required
+          />
+          <br />
           <label htmlFor="email">Email</label>
           <input
             type="email"
+            placeholder="Enter Your Email"
             name="email"
-            value={email}
-            placeholder="Enter your email"
-            onChange={handleOnChange}
+            value={signupInfo.email}
+            onChange={handleChange}
+            required
           />
-        </div>
-        <div>
-          <label htmlFor="email">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            placeholder="Enter your username"
-            onChange={handleOnChange}
-          />
-        </div>
-        <div>
+          <br />
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            placeholder="Enter Password"
             name="password"
-            value={password}
-            placeholder="Enter your password"
-            onChange={handleOnChange}
+            value={signupInfo.password}
+            onChange={handleChange}
+            required
           />
+          <br />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Signup</button>
         <span>
-          Already have an account? <Link to={"/login"}>Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </span>
       </form>
       <ToastContainer />
