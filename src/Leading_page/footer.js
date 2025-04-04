@@ -1,58 +1,70 @@
-import React from "react";
-import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+    import React from "react";
+    import { Facebook, Twitter, Instagram, Mail, MapPin, Phone } from "lucide-react";
+    import '..//styles/Footer.css'
 
-const Footer = () => {
-  return (
-    <footer className="py-4 w-100" style={{ backgroundColor: "#f8f9fa", color: "#333" }}>
-      <div className="container">
-        <div className="row text-center text-md-start">
-          {/* Company Info */}
-          <div className="col-md-4 mb-3">
-            <h4 className="fw-bold">OneTap – A Lifestyle Hub</h4>
-            <p>Your go-to platform for food, travel, and entertainment.</p>
-            <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-              <MapPin size={18} />
-              <span>123 Lifestyle Street, City, Country</span>
+    const Footer = () => {
+      return (
+        <footer className="footer">
+          <div className="footer-container">
+            {/* Brand Column */}
+            <div className="footer-brand">
+              <h2 className="footer-logo">One<span>Tap</span></h2>
+              <p className="footer-description">
+                Your all-in-one lifestyle platform for food, transport, and entertainment.
+              </p>
+              <div className="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100087525163391"><Facebook size={18} /></a>
+                <a href="https://x.com/kaushik_ahir04"><Twitter size={18} /></a>
+                <a href="https://www.instagram.com/_arjun_kapuriya_/"><Instagram size={18} /></a>
+              </div>
             </div>
-            <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mt-2">
-              <Phone size={18} />
-              <span>+123 456 7890</span>
+    
+            {/* Links Column 1 */}
+            <div className="footer-column">
+              <h3 className="footer-heading">Company</h3>
+              <ul className="footer-links">
+                <li><a href="/aboutUs">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Press</a></li>
+              </ul>
+            </div>
+    
+            {/* Links Column 2 */}
+            <div className="footer-column">
+              <h3 className="footer-heading">Services</h3>
+              <ul className="footer-links">
+                <li><a href="food">Food Delivery</a></li>
+                <li><a href="transport">Transport</a></li>
+                <li><a href="movies">Movies</a></li>
+              </ul>
+            </div>
+    
+            {/* Contact Column */}
+            <div className="footer-column">
+              <h3 className="footer-heading">Contact</h3>
+              <div className="footer-contact">
+                <div className="contact-item">
+                  <MapPin size={50} />
+                  <span>Ahmedabad University Near Commerce Six Road Ahmedabad - 380009 </span>
+                </div>
+                <div className="contact-item">
+                  <Phone size={18} />
+                  <span>+91 98241 81791</span>
+                </div>
+                <div className="contact-item">
+                  <Mail size={18} />
+                  <span>kaushik.l@ahduni.edu.in</span>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Quick Links */}
-          <div className="col-md-4 mb-3">
-            <h5 className="fw-bold">Quick Links</h5>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-decoration-none text-dark">Home</a></li>
-              <li><a href="#" className="text-decoration-none text-dark">About Us</a></li>
-              <li><a href="#" className="text-decoration-none text-dark">Services</a></li>
-              <li><a href="#" className="text-decoration-none text-dark">Contact</a></li>
-            </ul>
+    
+          <div className="copyright">
+            &copy; {new Date().getFullYear()} OneTap. All rights reserved.
           </div>
-
-          {/* Social Media */}
-          <div className="col-md-4">
-            <h5 className="fw-bold">Follow Us</h5>
-            <div className="d-flex justify-content-center justify-content-md-start gap-3">
-              <a href="#" className="text-dark"><Facebook size={24} /></a>
-              <a href="#" className="text-dark"><Twitter size={24} /></a>
-              <a href="#" className="text-dark"><Instagram size={24} /></a>
-              <a href="#" className="text-dark"><Linkedin size={24} /></a>
-            </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="text-center mt-4">
-          <hr />
-          <p className="mb-0">&copy; {new Date().getFullYear()} OneTap. All Rights Reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
-
-
+        </footer>
+      );
+    };
+    
+    export default Footer;

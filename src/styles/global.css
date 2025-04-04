@@ -1,0 +1,106 @@
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Root Variables */
+:root {
+  --primary-bg: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  --card-bg: #151515;
+  --text-primary: #e0e0e0;
+  --text-secondary: #888;
+  --accent-pink: #ff007a;
+  --accent-pink-light: #ff4d4d;
+  --accent-orange: #F5A623; /* Rapido's orange */
+  --accent-orange-light: #ffcc00; /* Lighter orange for gradients */
+  --shadow-glow: 0 15px 40px rgba(245, 166, 35, 0.5); /* Updated for Rapido's orange */
+  --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(245, 166, 35, 0.3); /* Updated for Rapido's orange */
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Common Animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.8s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.animate-pop-in {
+  animation: popIn 0.4s ease-out;
+}
+
+/* Common Button Style */
+.premium-btn {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+  color: #333;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow);
+}
+
+.premium-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(245, 166, 35, 0.6);
+}
+
+/* Common Card Style */
+.premium-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+  box-shadow: var(--shadow-dark);
+}
+
+/* Common Title Style */
+.premium-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-orange);
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-orange-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
+}

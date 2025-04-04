@@ -1,28 +1,22 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-require("dotenv").config();
-require("./Models/db");
-const AuthRouter = require("./Routes/AuthRouter");
-
+const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const AuthRouter = require('./Routes/AuthRouter');
 
-// Middleware
-app.use(bodyParser.json());
-
-// CORS Configuration (Fixed)
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Remove trailing slash
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-// Routes
-app.use("/auth", AuthRouter);
-
-// Start Server
+require('dotenv').config();
+require('./Models/db');
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log( `Server running on port ${PORT}`));
+
+app.get('/ping', (req, res) => {
+    res.send('PONG');
+});
+
+app.use(bodyParser.json());
+app.use(cors());
+app.use('/auth', AuthRouter);
+
+
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`)
+})

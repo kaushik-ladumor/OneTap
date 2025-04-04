@@ -1,152 +1,189 @@
-/* Signup Container */
-.signup-container {
+.signup-page-container {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  padding: 20px;
-  overflow: hidden; /* Prevent scrollbar */
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Signup Card */
-.signup-card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.signup-page-card {
+  background: rgba(255, 255, 255, 0.96);
+  padding: 1.5rem;
   width: 100%;
-  max-width: 400px;
-  animation: slideIn 0.5s ease-in-out;
-  margin: 0 auto; /* Center the card */
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Signup Form */
-.signup-form {
-  max-height: 80vh; /* Limit form height */
-  overflow-y: auto; /* Add scrollbar only if content overflows */
-  padding-right: 10px; /* Add space for scrollbar */
-}
-
-/* Hide scrollbar for a cleaner look */
-.signup-form::-webkit-scrollbar {
-  width: 0; /* Hide scrollbar */
-}
-
-/* Signup Title */
-.signup-title {
+.signup-page-title {
   font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
   text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ff3e6c;
+  position: relative;
+}
+
+/* .signup-page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #ff3e6c;
+  border-radius: 3px;
+} */
+
+.signup-form-group {
+  position: relative;
   margin-bottom: 1.5rem;
 }
 
-/* Signup Fields */
-.signup-field {
-  margin-bottom: 1rem; /* Reduce margin */
-}
-
-.signup-label {
-  display: block;
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-}
-
-.signup-input {
+.signup-form-input {
   width: 100%;
-  padding: 0.6rem; /* Reduce padding */
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 0.9rem; /* Reduce font size */
-  transition: border-color 0.3s ease;
-}
-
-.signup-input:focus {
-  border-color: #6a11cb;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   outline: none;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
 }
 
-/* Signup Button */
-.signup-button {
-  width: 100%;
-  padding: 0.6rem; /* Reduce padding */
-  background: #6a11cb;
-  color: #fff;
+.signup-form-input:focus {
+  border-color: #ff3e6c;
+  box-shadow: 0 0 0 3px rgba(255, 62, 108, 0.2);
+}
+
+.signup-password-toggle {
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  border-radius: 5px;
-  font-size: 0.9rem; /* Reduce font size */
+  color: #666;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
 }
 
-.signup-button:hover {
-  background: #2575fc;
+.signup-password-toggle:hover {
+  color: #ff3e6c;
 }
 
-.signup-button:disabled {
+.signup-page-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #ff3e6c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.signup-page-btn:hover {
+  background: #ff2b5c;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3);
+}
+
+.signup-page-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-/* Signup Error */
-.signup-error {
-  color: #ff4d4d;
-  font-size: 0.9rem;
+.signup-page-link {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-top: 1.8rem;
+  color: #666;
+  font-size: 0.95rem;
 }
 
-/* Signup Link */
-.signup-link {
-  text-align: center;
-  font-size: 0.8rem; /* Reduce font size */
-  color: #555;
-}
-
-.signup-link a {
-  color: #6a11cb;
+.signup-page-link a {
+  color: #ff3e6c;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
-.signup-link a:hover {
-  text-decoration: underline;
+.signup-page-link a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #ff3e6c;
+  transition: width 0.3s ease;
 }
 
-/* Responsive Design */
+.signup-page-link a:hover::after {
+  width: 100%;
+}
+
+.signup-password-strength {
+  margin-top: 0.8rem;
+}
+
+.signup-strength-bar {
+  height: 5px;
+  background: #eee;
+  border-radius: 3px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.signup-strength-fill {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.strength-0 { width: 20%; background: #ff4757; }
+.strength-1 { width: 40%; background: #ff4757; }
+.strength-2 { width: 60%; background: #ffa502; }
+.strength-3 { width: 80%; background: #2ed573; }
+.strength-4 { width: 100%; background: #2ed573; }
+
 @media (max-width: 480px) {
-  .signup-card {
-    padding: 1rem; /* Reduce padding on small screens */
+  .signup-page-container {
+    padding: 1rem;
   }
-
-  .signup-title {
-    font-size: 1.5rem; /* Reduce title size */
+  
+  .signup-page-card {
+    padding: 1.8rem;
   }
-
-  .signup-input {
-    padding: 0.5rem; /* Reduce input padding */
-    font-size: 0.8rem; /* Reduce input font size */
+  
+  .signup-page-title {
+    font-size: 2rem;
   }
-
-  .signup-button {
-    padding: 0.5rem; /* Reduce button padding */
-    font-size: 0.8rem; /* Reduce button font size */
-  }
-
-  .signup-link {
-    font-size: 0.7rem; /* Reduce link font size */
+  
+  .signup-form-input {
+    padding: 0.8rem 1rem;
   }
 }

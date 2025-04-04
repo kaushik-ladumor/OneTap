@@ -1,64 +1,109 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import "../../styles/Home.css"; // Import the CSS file
+import "../../styles/Home.css";
 
 function Home() {
     return (
-        <div className="home-container">
-            <h2 className="home-title animate-slide-in">Explore Our Services</h2>
-            
-            <div className="services-grid">
-                {/* Food Delivery */}
-                <div className="service-card animate-slide-up">
-                    <Link to="/food">
-                        <img 
-                            src="https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?q=80&w=1470&auto=format&fit=crop" 
-                            className="service-image" 
-                            alt="Food Delivery" 
-                        />
-                    </Link>
-                    <div className="service-content">
-                        <h3 className="service-title">Food Delivery</h3>
-                        <p className="service-description">
-                            Order your favorite meals from top restaurants and enjoy fast, reliable delivery.
-                        </p>
+        <div className="home-page">
+            {/* Hero Section - Full Width with Overlay */}
+            <section className="hero">
+                <div className="hero-image">
+                    <img 
+                        src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1374&q=80" 
+                        alt="People enjoying services" 
+                    />
+                    <div className="hero-overlay">
+                        <div className="hero-content">
+                            <h1>Your Gateway to Premium Services</h1>
+                            <p>Discover the best your city has to offer</p>
+                            <Link to="/#" className="cta-button">Explore Now</Link>
+                        </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Services Section */}
+            <section className="services">
+                <div className="section-header">
+                    <h2>Our Featured Services</h2>
+                    <p>Quality experiences at your fingertips</p>
                 </div>
 
-                {/* Ride Booking */}
-                <div className="service-card animate-slide-up">
-                    <Link to="/transport">
-                        <img 
-                            src="https://img.freepik.com/premium-vector/delivery-service-app-smartphone-cargo-vans-truck_357257-62.jpg?ga=GA1.1.501001156.1728234445&semt=ais_hybrid" 
-                            className="service-image" 
-                            alt="Ride Booking" 
-                        />
-                    </Link>
-                    <div className="service-content">
-                        <h3 className="service-title">Ride Booking</h3>
-                        <p className="service-description">
-                            Book a ride quickly and affordably. Choose from a variety of transport options.
-                        </p>
+                <div className="cards-container">
+                    {/* Food Delivery Card */}
+                    <div className="service-card">
+                        <div className="card-image">
+                            <img 
+                                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80" 
+                                alt="Gourmet food" 
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h3>Food Delivery</h3>
+                            <p>Restaurant-quality meals delivered to your door</p>
+                            <Link to="/food" className="card-link">
+                                Order Food <span>→</span>
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
-                {/* Movie Tickets */}
-                <div className="service-card animate-slide-up">
-                    <Link to="/movies">
-                        <img 
-                            src="https://img.freepik.com/free-vector/online-movies-entertainment-banner_1419-2246.jpg" 
-                            className="service-image" 
-                            alt="Movie Tickets" 
-                        />
-                    </Link>
-                    <div className="service-content">
-                        <h3 className="service-title">Movie Tickets</h3>
-                        <p className="service-description">
-                            Book tickets for the latest movies, concerts, and events with ease.
-                        </p>
+                    {/* Ride Booking Card */}
+                    <div className="service-card">
+                        <div className="card-image">
+                            <img 
+                                src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80" 
+                                alt="Ride service" 
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h3>Ride Booking</h3>
+                            <p>Reliable transportation whenever you need it</p>
+                            <Link to="/transport" className="card-link">
+                                Book Ride <span>→</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Entertainment Card */}
+                    <div className="service-card">
+                        <div className="card-image">
+                            <img 
+                                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80" 
+                                alt="Movie theater" 
+                            />
+                        </div>
+                        <div className="card-body">
+                            <h3>Entertainment</h3>
+                            <p>Movies, events and unforgettable experiences</p>
+                            <Link to="/movies" className="card-link">
+                                Find Events <span>→</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            {/* App Download Section */}
+            <section className="app-section">
+                <div className="app-content">
+                    <h2>Get the App for Exclusive Features</h2>
+                    <p>Download now to access special offers and premium features</p>
+                    <div className="download-buttons">
+                        <a href="#" className="download-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" />
+                        </a>
+                        <a href="#" className="download-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" />
+                        </a>
+                    </div>
+                </div>
+                <div className="app-image">
+                    <img 
+                        src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80" 
+                        alt="App interface" 
+                    />
+                </div>
+            </section>
         </div>
     );
 }

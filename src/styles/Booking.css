@@ -1,238 +1,420 @@
-/* Reset and Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #f5f5f5;
-  overflow-x: hidden;
-}
-
-/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for Firefox */
-body {
-  scrollbar-width: none;
-}
-
-/* Booking Page Container */
+/* Booking Page Specific Styles */
 .booking-page {
   min-height: 100vh;
-  background: #ffffff;
+  background: #f8f8f8;
   padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Container Styles */
+.booking-container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.booking-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.booking-col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.booking-col {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.booking-p-0 {
+  padding: 0 !important;
 }
 
 /* Ride Details Section */
-.ride-details {
+.booking-ride-details {
   background: #ffffff;
-  padding: 30px 0;
   width: 100%;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-/* Location Info (Enhanced Styling) */
-.location-info {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  padding: 20px 30px;
-  background: linear-gradient(135deg, #f9f9f9, #ffffff);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+/* Location Info Styles */
+.booking-location-info {
+  margin-bottom: 15px;
+  padding: 20px;
+  background: #ffffff;
+  position: relative;
 }
 
-.location-item {
+.booking-location-info::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.booking-location-item {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 12px 0;
   padding: 8px 0;
-  border-left: 3px solid transparent;
-  transition: border-left-color 0.3s ease;
 }
 
-.location-item:hover {
-  border-left-color: #3b82f6;
-}
-
-.location-text {
-  font-size: 15px;
+.booking-location-text {
+  font-size: 16px;
   font-weight: 500;
-  color: #222;
-  line-height: 1.5;
+  color: #333;
+  line-height: 1.4;
+  flex: 1;
 }
 
-.dot {
+.booking-dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   margin-right: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.green {
+.booking-green {
   background-color: #34c759;
 }
 
-.red {
+.booking-red {
   background-color: #ff3b30;
 }
 
-.distance {
-  font-weight: 500;
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px;
-  padding: 8px 0;
-  background: #e0e7ff;
-  border-radius: 6px;
+.booking-distance {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  margin-top: 15px;
+  padding: 10px;
+  background: #fff8e1;
+  border-radius: 8px;
   text-align: center;
+  border: 1px solid #ffd600;
 }
 
-/* Map Wrapper */
-.map-wrapper {
+/* Map Styles - UPDATED */
+.booking-map-wrapper {
   padding: 0;
-  margin: 0 30px 30px;
+  margin: 0 10px 10px 0; /* Increased side margins */
+  height: 380px; /* Slightly reduced height */
 }
 
-/* Map Container */
-.map-container {
-  width: 100%;
-  height: 400px;
+.booking-map-container {
+  width: calc(100% - 40px); /* Accounts for increased margins */
+  height: 100%;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
   border: 1px solid #e0e0e0;
+  margin: 0 auto; /* Center the map */
 }
 
-/* Customize Mapbox controls */
-.mapboxgl-control-container .mapboxgl-ctrl {
-  margin: 15px;
+/* Map Marker Styles */
+.booking-map-marker-pickup {
+  background: #34c759;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
-  background: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+.booking-map-marker-drop {
+  background: #ff3b30;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* Section Title */
-.section-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 15px;
-  padding: 0 30px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border-bottom: 2px solid #3b82f6;
-  display: inline-block;
+.booking-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 20px 15px;
+  padding-bottom: 8px;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #ffd600;
 }
 
-/* Service List */
-.service-list {
+/* Service List Styles */
+.booking-service-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 30px;
-  padding: 0 30px;
+  margin-bottom: 15px;
+  padding: 0 20px;
 }
 
-.service-option {
+.booking-service-option {
   display: flex;
   align-items: center;
   padding: 15px;
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.2s ease;
   border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.service-option:hover {
-  transform: translateY(-3px);
-  background: #f0f4ff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.booking-service-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.service-option.selected {
-  background: #3b82f6;
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-  border-color: #3b82f6;
+.booking-service-option.booking-selected {
+  background: #fff8e1;
+  border-color: #ffd600;
+  box-shadow: 0 4px 12px rgba(255, 214, 0, 0.2);
 }
 
-.service-option.selected .service-name,
-.service-option.selected .service-price {
-  color: #ffffff;
+.booking-service-option.booking-selected .booking-service-name {
+  color: #333;
+  font-weight: 600;
 }
 
-.service-option.disabled {
+.booking-service-option.booking-selected .booking-service-price {
+  color: #ff6d00;
+  font-weight: 600;
+}
+
+.booking-service-option.booking-disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  background: #f5f5f5;
 }
 
-.service-icon {
-  font-size: 22px;
+/* Service Icon Styles */
+.booking-service-icon {
+  font-size: 24px;
   margin-right: 15px;
-  transition: transform 0.3s ease;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff8e1;
+  border-radius: 50%;
+  border: 2px solid #000000;
+  color: #000000;
+  transition: all 0.3s ease;
 }
 
-.service-option:hover .service-icon {
-  transform: scale(1.1);
+.booking-service-option.booking-selected .booking-service-icon {
+  background: #ffd600;
+  color: #000;
+  transform: scale(1.05);
 }
 
-.service-details {
+/* Service Details */
+.booking-service-details {
   flex: 1;
 }
 
-.service-name {
-  font-size: 15px;
+.booking-service-name {
+  font-size: 16px;
   font-weight: 500;
-  margin: 0;
-  color: #1a1a1a;
+  margin: 0 0 4px 0;
+  color: #333;
 }
 
-.service-price {
-  font-size: 13px;
+.booking-service-price {
+  font-size: 14px;
   color: #666;
   margin: 0;
+  font-weight: 500;
+}
+
+.booking-service-time {
+  font-size: 13px;
+  color: #666;
+  margin-top: 5px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.booking-service-time::before {
+  content: '⏱️';
+  font-size: 12px;
 }
 
 /* Call to Action Button */
-.cta-button {
-  width: calc(100% - 60px);
-  padding: 18px; /* Increased padding */
-  background: linear-gradient(135deg, #d2cb16, #e8e809);
-  color: #ffffff;
+.booking-cta-button {
+  width: 90% !important;
+  max-width: 350px;
+  padding: 16px;
+  background: #000000;
+  color: #ffd600;
   border: none;
-  border-radius: 15px; /* Increased for more rounded shape */
-  font-size: 15px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  margin: 0 30px 40px; /* Increased bottom margin */
-  box-shadow: 0 4px 12px rgba(210, 203, 22, 0.3);
+  transition: all 0.2s ease;
+  margin: 0 auto 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.cta-button:hover {
-  background: linear-gradient(135deg, #e8e809, #d2cb16);
+.booking-cta-button:hover {
+  background: #333;
+  color: #ffd600;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(210, 203, 22, 0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.cta-button:disabled {
-  background: #cccccc;
+.booking-cta-button.booking-disabled {
+  background: #e0e0e0;
+  color: #9e9e9e;
   cursor: not-allowed;
+  transform: none;
   box-shadow: none;
 }
 
+/* Call Button */
+.booking-call-button {
+  width: 90% !important;
+  max-width: 350px;
+  padding: 16px;
+  background: #34c759;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0 auto 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-call-button:hover {
+  background: #2dbb52;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.booking-call-button .booking-call-icon {
+  font-size: 20px;
+}
+
+.booking-main-btn-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Popup Styles */
+.booking-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: booking-fadeIn 0.3s ease-in;
+  backdrop-filter: blur(3px);
+}
+
+.booking-popup {
+  width: 90%;
+  max-width: 340px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-top: 6px solid #ffd600;
+}
+
+.booking-popup-header {
+  background: #000000;
+  padding: 18px;
+  text-align: center;
+  position: relative;
+}
+
+.booking-popup-header h2 {
+  color: #ffd600;
+  font-size: 20px;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.booking-popup-body {
+  padding: 25px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.booking-popup-body p {
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+}
+
+.booking-popup-footer {
+  padding: 0 20px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.booking-popup-button {
+  padding: 14px 35px;
+  background: #000000;
+  color: #ffd600;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.booking-popup-button:hover {
+  background: #333;
+  transform: scale(1.03);
+}
+
 /* Animations */
-@keyframes slideIn {
+@keyframes booking-slideIn {
   from {
     opacity: 0;
     transform: translateY(15px);
@@ -243,257 +425,97 @@ body {
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+@keyframes booking-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.booking-animate-slide-in {
+  animation: booking-slideIn 0.4s ease-out forwards;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 4px 12px rgba(210, 203, 22, 0.3);
-  }
-  50% {
-    transform: scale(1.03);
-    box-shadow: 0 6px 18px rgba(210, 203, 22, 0.4);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 4px 12px rgba(210, 203, 22, 0.3);
-  }
-}
-
-.animate-slide-in {
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.7s ease-in forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.5s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s infinite ease-in-out;
-}
-
-/* Popup Overlay */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in;
-}
-
-/* Popup Content */
-.popup {
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  max-width: 450px;
-  width: 90%;
-  background-color: #fff;
-  border: 2px solid #e8e809;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  animation: popIn 0.4s ease-out;
-}
-
-.popup h2 {
-  font-size: 26px;
-  margin-bottom: 15px;
-  color: #d2cb16;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.popup p {
-  font-size: 18px;
-  margin-bottom: 25px;
-  color: #333;
-  line-height: 1.5;
-}
-
-.popup .cta-button {
-  width: 100%;
-  padding: 14px;
-  font-size: 18px;
-  background: linear-gradient(135deg, #d2cb16, #e8e809);
-  color: #333;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.popup .cta-button:hover {
-  background: linear-gradient(135deg, #e8e809, #d2cb16);
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Popup Animations */
-@keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.booking-animate-fade-in {
+  animation: booking-fadeIn 0.3s ease-in forwards;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .ride-details {
-    padding: 20px 0;
+  .booking-map-wrapper {
+    height: 320px;
+    margin: 0 15px 20px;
   }
-
-  .map-container {
-    height: 350px;
+  
+  .booking-service-list {
+    padding: 0 15px;
   }
-
-  .location-info,
-  .section-title,
-  .service-list,
-  .map-wrapper,
-  .cta-button {
-    padding: 15px 20px;
-    margin: 0 20px 20px;
-  }
-
-  .cta-button {
-    width: calc(100% - 40px);
-    padding: 15px;
-    border-radius: 12px;
-  }
-
-  .section-title {
-    font-size: 18px;
-  }
-
-  .service-option {
+  
+  .booking-service-option {
     padding: 12px;
   }
-
-  .service-icon {
-    font-size: 20px;
-    margin-right: 12px;
-  }
-
-  .service-name {
-    font-size: 14px;
-  }
-
-  .service-price {
-    font-size: 12px;
-  }
-
-  .popup {
-    padding: 20px;
-  }
-
-  .popup h2 {
+  
+  .booking-service-icon {
     font-size: 22px;
+    margin-right: 12px;
+    width: 44px;
+    height: 44px;
   }
-
-  .popup p {
-    font-size: 16px;
+  
+  .booking-service-name {
+    font-size: 15px;
   }
-
-  .popup .cta-button {
-    padding: 12px;
-    font-size: 16px;
+  
+  .booking-service-price,
+  .booking-service-time {
+    font-size: 13px;
   }
 }
 
 @media (max-width: 576px) {
-  .booking-page {
-    padding: 0;
-  }
-
-  .ride-details {
-    padding: 15px 0;
-  }
-
-  .map-container {
-    height: 300px;
-  }
-
-  .location-info,
-  .section-title,
-  .service-list,
-  .map-wrapper,
-  .cta-button {
-    padding: 10px 15px;
-    margin: 0 15px 15px;
-  }
-
-  .cta-button {
-    width: calc(100% - 30px);
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .location-text {
-    font-size: 14px;
-  }
-
-  .distance {
-    font-size: 13px;
-  }
-
-  .section-title {
-    font-size: 16px;
-  }
-
-  .service-option {
-    padding: 10px;
-  }
-
-  .service-icon {
-    font-size: 18px;
-  }
-
-  .popup {
+  .booking-location-info {
     padding: 15px;
   }
-
-  .popup h2 {
+  
+  .booking-location-text {
+    font-size: 15px;
+  }
+  
+  .booking-map-wrapper {
+    height: 280px;
+    margin: 0 10px 15px;
+  }
+  
+  .booking-section-title {
+    margin: 0 15px 12px;
+    font-size: 17px;
+  }
+  
+  .booking-service-list {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .booking-service-icon {
+    width: 40px;
+    height: 40px;
     font-size: 20px;
   }
-
-  .popup p {
-    font-size: 14px;
+  
+  .booking-cta-button,
+  .booking-call-button {
+    padding: 14px;
+    font-size: 15px;
   }
-
-  .popup .cta-button {
-    padding: 10px;
-    font-size: 14px;
+  
+  .booking-popup-header h2 {
+    font-size: 18px;
+  }
+  
+  .booking-popup-body p {
+    font-size: 15px;
+  }
+  
+  .booking-popup-button {
+    padding: 12px 30px;
+    font-size: 15px;
   }
 }

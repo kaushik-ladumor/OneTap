@@ -74,10 +74,7 @@ const Movies = () => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchQuery}`
       );
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
-      }
-
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       if (data.Response === "True") {
         const moviesWithPosters = data.Search.filter(
@@ -89,31 +86,32 @@ const Movies = () => {
         setError(data.Error || "No movies found.");
       }
     } catch (error) {
-      console.error("Error searching movies:", error);
-      setError("An error occurred while fetching movies.");
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const renderMovieCards = (movieList) => {
+  const renderMovieCards = (movieList, isSearchResult = false) => {
     return movieList.map((movie) => (
       <div
         key={movie.imdbID}
-        className="movie-card"
+        className={`movie-card ${isSearchResult ? "search-result-card" : ""}`}
         onClick={() => navigate(`/movies/${movie.imdbID}?location=${selectedLocation}`)}
       >
-        <div className="movie-card-inner">
-          <div className="movie-poster">
-            <img src={movie.Poster} alt={movie.Title} />
-            <div className="movie-overlay">🎬 Watch Now</div>
+        <div className="movie-poster">
+          <img src={movie.Poster} alt={movie.Title} />
+          <div className="movie-overlay">
+            <span>Book Now</span>
           </div>
+        </div>
+        <div className="movie-card-inner">
           <h6 className="movie-title">{movie.Title}</h6>
           <p className="movie-year">{movie.Year}</p>
           <div className="movie-details">
             <span>
               <Star size={16} className="star-icon" />
-              {movie.imdbRating || "N/A"}
+              {movie.imdbRating || "TBD"}
             </span>
             <span>
               <Calendar size={16} className="calendar-icon" />
@@ -135,7 +133,7 @@ const Movies = () => {
         className="location-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Choose Your Location</Modal.Title>
+          <Modal.Title>Select Your City</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="location-buttons">
@@ -152,7 +150,7 @@ const Movies = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Display Selected Location */}
+      {/* Selected Location */}
       {!showLocationModal && selectedLocation && (
         <div className="selected-location">
           <MapPin size={24} className="map-icon" />
@@ -160,14 +158,13 @@ const Movies = () => {
         </div>
       )}
 
-      {/* Rest of the Page */}
+      {/* Main Content */}
       {!showLocationModal && (
         <>
-          {/* Search Bar */}
           <form onSubmit={handleSearchSubmit} className="search-form">
             <input
               type="text"
-              placeholder="Search movies..."
+              placeholder="Search for Movies..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="search-input"
@@ -177,18 +174,14 @@ const Movies = () => {
             </button>
           </form>
 
-          {/* Loading State */}
           {loading && <p className="loading">Loading...</p>}
-
-          {/* Error Message */}
           {error && <p className="error">{error}</p>}
 
-          {/* Display Movies by Category */}
           {Object.keys(categories).map((category) => (
             <div key={category} className="movie-section">
               <h2>
                 {category === "trending"
-                  ? "Trending Movies"
+                  ? "Trending Now"
                   : `${category.charAt(0).toUpperCase() + category.slice(1)} Movies`}
               </h2>
               <div className="movie-grid">
@@ -199,38 +192,37 @@ const Movies = () => {
         </>
       )}
 
-      {/* Search Results Popup */}
-      {showSearchPopup && (
-        <Modal
-          show={showSearchPopup}
-          onHide={() => setShowSearchPopup(false)}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Search Results</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="movie-grid">{renderMovieCards(movies)}</div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => setShowSearchPopup(false)}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      )}
+      {/* Search Results Modal */}
+      <Modal
+        show={showSearchPopup}
+        onHide={() => setShowSearchPopup(false)}
+        centered
+        className="search-results-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Search Results</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="search-results-grid">
+            {renderMovieCards(movies, true)}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShowSearchPopup(false)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
 
-      {/* Empty Search Popup */}
+      {/* Empty Search Modal */}
       <Modal
         show={showEmptySearchPopup}
         onHide={() => setShowEmptySearchPopup(false)}
         centered
-        className="empty-search-popup"
+        className="empty-search-modal"
       >
         <Modal.Header closeButton>
           <Modal.Title>Oops!</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Please enter a movie title to search.
-        </Modal.Body>
+        <Modal.Body>Please enter a movie name to search.</Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setShowEmptySearchPopup(false)}>Close</Button>
         </Modal.Footer>

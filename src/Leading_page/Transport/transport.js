@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { FaMapMarkerAlt, FaFlagCheckered } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaFlagCheckered,
+  FaMotorcycle,
+  FaCar,
+  FaTaxi,
+  FaBolt,
+  FaShieldAlt,
+  FaStar,
+  FaMoneyBillWave,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "../../styles/transport.css"; // Ensure this path matches your project structure
+import "../../styles/transport.css";
 
 function Transport() {
   const [pickupLocation, setPickupLocation] = useState(null);
@@ -67,112 +77,156 @@ function Transport() {
   };
 
   return (
-    <div className="transport-page">
-      <div className="transport-card">
-        <h1 className="transport-title">Book Your Ride</h1>
-        <form className="transport-form">
-          <div className="input-container">
-            <FaMapMarkerAlt className="input-icon" />
-            <input
-              type="text"
-              placeholder="Enter Pickup Location"
-              value={pickupInput}
-              onChange={(e) => {
-                setPickupInput(e.target.value);
-                fetchSuggestions(e.target.value, "pickup");
-              }}
-            />
-            {pickupSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {pickupSuggestions.map((s, i) => (
-                  <li key={i} onClick={() => handleLocationSelect(s, "pickup")}>
-                    {s.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="input-container">
-            <FaFlagCheckered className="input-icon" />
-            <input
-              type="text"
-              placeholder="Enter Drop Location"
-              value={dropInput}
-              onChange={(e) => {
-                setDropInput(e.target.value);
-                fetchSuggestions(e.target.value, "drop");
-              }}
-            />
-            {dropSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {dropSuggestions.map((s, i) => (
-                  <li key={i} onClick={() => handleLocationSelect(s, "drop")}>
-                    {s.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <button type="button" className="cta-button" onClick={handleBookRide}>
-            Book Ride
-          </button>
-        </form>
+    <div className="ride-booking-page">
+      <div className="booking-hero">
+        <div className="booking-card">
+          <h1 className="booking-title">Book Your Ride Now</h1>
+          <form className="booking-form">
+            <div className="location-input-container">
+              <FaMapMarkerAlt className="input-icon pickup-icon" />
+              <input
+                type="text"
+                placeholder="Enter pickup location"
+                value={pickupInput}
+                onChange={(e) => {
+                  setPickupInput(e.target.value);
+                  fetchSuggestions(e.target.value, "pickup");
+                }}
+              />
+              {pickupSuggestions.length > 0 && (
+                <ul className="location-suggestions">
+                  {pickupSuggestions.map((s, i) => (
+                    <li
+                      key={i}
+                      onClick={() => handleLocationSelect(s, "pickup")}
+                    >
+                      {s.place_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="location-input-container">
+              <FaFlagCheckered className="input-icon drop-icon" />
+              <input
+                type="text"
+                placeholder="Enter drop location"
+                value={dropInput}
+                onChange={(e) => {
+                  setDropInput(e.target.value);
+                  fetchSuggestions(e.target.value, "drop");
+                }}
+              />
+              {dropSuggestions.length > 0 && (
+                <ul className="location-suggestions">
+                  {dropSuggestions.map((s, i) => (
+                    <li key={i} onClick={() => handleLocationSelect(s, "drop")}>
+                      {s.place_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <button
+              type="button"
+              className="primary-button"
+              onClick={handleBookRide}
+            >
+              Find Rides
+            </button>
+          </form>
+        </div>
       </div>
 
       {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup">
-            <h2>Please Select Both Locations</h2>
-            <p>You need to select both Pickup and Drop locations to proceed.</p>
-            <button className="cta-button" onClick={closePopup}>
-              Close
+        <div className="booking-popup-overlay">
+          <div className="booking-popup">
+            <h2>Location Required</h2>
+            <p>Please select both pickup and drop locations to continue.</p>
+            <button className="primary-button" onClick={closePopup}>
+              Okay
             </button>
           </div>
         </div>
       )}
 
-      <div className="services-container">
-        <h1>Our Services</h1>
-        <div className="services">
-          <div className="service">
-            <span className="icon">🚲</span>
-            <h2>Bike</h2>
-            <p>Affordable and quick rides for short distances.</p>
-          </div>
-          <div className="service">
-            <span className="icon">🛺</span>
-            <h2>Auto</h2>
-            <p>Comfortable and economical for city travel.</p>
-          </div>
-          <div className="service">
-            <span className="icon">🚗</span>
-            <h2>Car</h2>
-            <p>Premium rides for longer and enjoyable journeys.</p>
-          </div>
+      <div className="services-section">
+        <div className="section-header">
+          <h2>Our Transportation Services</h2>
+          <p>Choose the ride that fits your needs</p>
         </div>
+        <div className="services-grid">
+          <div className="service-card">
+            <div className="service-icon bike">
+              <span role="img" aria-label="bike" className="vehicle-icon">
+                🚲
+              </span>
+            </div>
+            <h3>Bike Taxi</h3>
+            <p>Quick and affordable rides for short distances</p>
+            <button className="secondary-button">Book Bike</button>
+          </div>
+          <div className="service-card">
+            <div className="service-icon auto">
+              <span
+                role="img"
+                aria-label="auto rickshaw"
+                className="vehicle-icon"
+              >
+                🛺
+              </span>
+            </div>
+            <h3>Auto Rickshaw</h3>
+            <p>Comfortable three-wheeler for city commutes</p>
+            <button className="secondary-button">Book Auto</button>
+          </div>
+          <div className="service-card">
+            <div className="service-icon car">
+              <span role="img" aria-label="car" className="vehicle-icon">
+                🚗
+              </span>
+            </div>
+            <h3>Car Ride</h3>
+            <p>Premium comfort for longer journeys</p>
+            <button className="secondary-button">Book Car</button>
+          </div>
+        </div>{" "}
       </div>
 
-      <div className="quickride-container">
-        <div className="section">
-          <h2>Fast Rides, Great Prices</h2>
-          <p>
-            At QuickRide, we guarantee speedy pickups and the best rates for every journey.
-          </p>
-          <button className="cta-button">Book Now →</button>
+      <div className="features-section">
+        <div className="section-header">
+          <h2>Why Choose Us?</h2>
+          <p>We make your rides better in every way</p>
         </div>
-        <div className="section">
-          <h2>Your Safety Matters</h2>
-          <p>
-            Your safety is our top priority. We ensure every ride is secure and comfortable.
-          </p>
-          <button className="cta-button">Learn More →</button>
-        </div>
-        <div className="section">
-          <h2>Earn on Your Schedule</h2>
-          <p>
-            Become a QuickRide partner and enjoy flexible hours with high earnings potential.
-          </p>
-          <button className="cta-button">Join Us →</button>
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaBolt />
+            </div>
+            <h3>Quick Pickups</h3>
+            <p>Average arrival time under 5 minutes</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaMoneyBillWave />
+            </div>
+            <h3>Best Prices</h3>
+            <p>Competitive rates with no surge pricing</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaShieldAlt />
+            </div>
+            <h3>Safe Rides</h3>
+            <p>Verified drivers and safety features</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaStar />
+            </div>
+            <h3>Premium Service</h3>
+            <p>Top-rated customer support</p>
+          </div>
         </div>
       </div>
     </div>

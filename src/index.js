@@ -3,10 +3,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
+
 
 import Navbar from "./Leading_page/navbar";
 import Footer from "./Leading_page/footer";
+import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./AuthContext";
 
 // Importing Pages
 import Home from "./Leading_page/Home/home";
@@ -26,34 +28,41 @@ import BookingDetails from "./Leading_page/Movies/BookingDetails";
 
 import Login from "./Leading_page/Login/login";
 import Signup from "./Leading_page/SignUp/signup";
+import AboutUs from "./Leading_page/Company/aboutUs";
 
-// Render Application
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/food" element={<Food />} />
-        <Route path="/food/:id" element={<FoodDetails />} />
-        <Route path="/payment-receipt/:id" element={<PaymentReceipt />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/transport" element={<Transport />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/receipt" element={<Receipt />} />
-        <Route path="/history" element={<BookingHistory />} />
+          {/* Protected Routes - Require Login */}
+          <Route path="/food" element={<ProtectedRoute element={<Food />} />} />
+          <Route path="/food/:id" element={<ProtectedRoute element={<FoodDetails />} />} />
+          <Route path="/payment-receipt/:id" element={<ProtectedRoute element={<PaymentReceipt />} />} />
 
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
-        <Route path="/booking/:id" element={<BookingDetails />} />
+          <Route path="/transport" element={<ProtectedRoute element={<Transport />} />} />
+          <Route path="/booking" element={<ProtectedRoute element={<Booking />} />} />
+          <Route path="/payment" element={<ProtectedRoute element={<Payment />} />} />
+          <Route path="/receipt" element={<ProtectedRoute element={<Receipt />} />} />
+          <Route path="/history" element={<ProtectedRoute element={<BookingHistory />} />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-      <Footer />
-      <ToastContainer />
-    </BrowserRouter>
+          <Route path="/movies" element={<ProtectedRoute element={<Movies />} />} />
+          <Route path="/movies/:id" element={<ProtectedRoute element={<MovieDetails />} />} />
+          <Route path="/booking/:id" element={<ProtectedRoute element={<BookingDetails />} />} />
+
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+
+          <Route path="/aboutUs" element={<AboutUs />} />
+        </Routes>
+        <Footer />
+        <ToastContainer />
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );

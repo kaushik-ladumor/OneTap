@@ -1,199 +1,263 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../../styles/payment.css"; // Import the updated CSS file
+import "../../styles/payment.css";
 
 function Payment() {
   const location = useLocation();
   const navigate = useNavigate();
   const { pickupLocation, dropLocation, selectedService, price } = location.state || {};
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const [showBookRideButton, setShowBookRideButton] = useState(false);
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "",
     expiry: "",
     cvv: "",
     cardHolder: "",
   });
+  const [formErrors, setFormErrors] = useState({});
 
-  // Calculate fixed price from the price range (e.g., "₹ 54 - ₹ 63" -> "₹ 58")
+  // Calculate fixed price
   const fixedPrice = price
     ? (() => {
-        // Remove the currency symbol and split the price range
         const priceRange = price.replace(/[^0-9 -]/g, "").trim();
-        const [min, max] = priceRange.split("-").map((val) => parseInt(val.trim(), 10));
-
-        // Calculate the average price
-        if (!isNaN(min) && !isNaN(max)) {
-          const average = Math.round((min + max) / 2);
-          return `₹ ${average}`;
-        } else {
-          return `₹ --`;
-        }
+        const [min, max] = priceRange
+          .split("-")
+          .map((val) => parseInt(val.trim(), 10));
+        return !isNaN(min) && !isNaN(max)
+          ? `₹${Math.round((min + max) / 2)}`
+          : `₹--`;
       })()
-    : "₹ --";
+    : "₹--";
+
+  // Validate card details
+  const validateCard = () => {
+    const errors = {};
+    if (cardDetails.cardNumber.length !== 19)
+      errors.cardNumber = "Invalid card number";
+    if (!/^\d{2}\/\d{2}$/.test(cardDetails.expiry))
+      errors.expiry = "Invalid expiry (MM/YY)";
+    if (cardDetails.cvv.length !== 3) errors.cvv = "Invalid CVV";
+    if (!cardDetails.cardHolder.trim())
+      errors.cardHolder = "Card holder name required";
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handlePaymentMethodSelect = (method) => {
     setSelectedPaymentMethod(method);
-    setShowBookRideButton(true);
   };
 
   const handleCardInputChange = (e) => {
     const { name, value } = e.target;
-    setCardDetails((prev) => ({ ...prev, [name]: value }));
-    if (selectedPaymentMethod === "Card") {
-      setShowBookRideButton(
-        cardDetails.cardNumber && cardDetails.expiry && cardDetails.cvv && cardDetails.cardHolder
-      );
+    let formattedValue = value;
+
+    // Format card number with spaces
+    if (name === "cardNumber") {
+      formattedValue = value
+        .replace(/\s/g, "")
+        .replace(/(\d{4})/g, "$1 ")
+        .trim();
     }
+    // Format expiry date
+    else if (name === "expiry" && value.length === 2 && !value.includes("/")) {
+      formattedValue = value + "/";
+    }
+
+    setCardDetails((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
   const handleBookRide = () => {
+    if (selectedPaymentMethod === "Card" && !validateCard()) return;
+
     const receipt = {
       id: Date.now(),
       pickupLocation: pickupLocation?.place_name,
       dropLocation: dropLocation?.place_name,
       service: selectedService,
-      price: fixedPrice, // Use fixed price in receipt
+      price: fixedPrice,
       paymentMethod: selectedPaymentMethod,
       date: new Date().toLocaleString(),
-      status: "booked", // Initial status
+      status: "booked",
     };
 
-    const bookingHistory = JSON.parse(localStorage.getItem("bookingHistory")) || [];
-    bookingHistory.push(receipt);
-    localStorage.setItem("bookingHistory", JSON.stringify(bookingHistory));
-
+    const bookingHistory =
+      JSON.parse(localStorage.getItem("bookingHistory")) || [];
+    localStorage.setItem(
+      "bookingHistory",
+      JSON.stringify([...bookingHistory, receipt])
+    );
     navigate("/receipt", { state: { receipt } });
   };
 
+  // Check if booking is ready
+  const canBookRide =
+    selectedPaymentMethod &&
+    (selectedPaymentMethod !== "Card" ||
+      (cardDetails.cardNumber.length === 19 &&
+        /^\d{2}\/\d{2}$/.test(cardDetails.expiry) &&
+        cardDetails.cvv.length === 3 &&
+        cardDetails.cardHolder.trim()));
+
   return (
     <div className="payment-page">
-      <div className="payment-wrapper">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12 p-0 payment-details">
-              <h1 className="page-title animate-slide-in">Payment</h1>
-              <div className="booking-details animate-slide-in">
-                <h2>Booking Summary</h2>
-                <div className="summary-item">
-                  <span className="label">Pickup:</span>
-                  <span className="value">{pickupLocation?.place_name}</span>
-                </div>
-                <div className="summary-item">
-                  <span className="label">Drop:</span>
-                  <span className="value">{dropLocation?.place_name}</span>
-                </div>
-                <div className="summary-item">
-                  <span className="label">Service:</span>
-                  <span className="value">{selectedService}</span>
-                </div>
-                <div className="summary-item">
-                  <span className="label">Price:</span>
-                  <span className="value">{fixedPrice}</span>
-                </div>
-              </div>
-              <div className="payment-options animate-slide-in">
-                <h2>Payment Methods</h2>
-                <div className="payment-methods">
-                  <div
-                    className={`payment-method animate-slide-up ${selectedPaymentMethod === "GPay" ? "selected" : ""}`}
-                    onClick={() => handlePaymentMethodSelect("GPay")}
-                  >
-                    <img src="https://lh3.googleusercontent.com/cL0-sGY6d5KaZFLOYuM_Q7-jjtBMa4kWFH63P_SkulwLOeJ0RlsPSIFreR6K6np2n_Q_JSiZbSYmwGteTPNQ6M07II1bo_S6HJ4yFkE=rw-s0" alt="GPay" />
-                    <span>GPay</span>
-                  </div>
-                  <div
-                    className={`payment-method animate-slide-up ${selectedPaymentMethod === "Paytm" ? "selected" : ""}`}
-                    onClick={() => handlePaymentMethodSelect("Paytm")}
-                  >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Paytm_logo.png" alt="Paytm" />
-                    <span>Paytm</span>
-                  </div>
-                  <div
-                    className={`payment-method animate-slide-up ${selectedPaymentMethod === "PhonePe" ? "selected" : ""}`}
-                    onClick={() => handlePaymentMethodSelect("PhonePe")}
-                  >
-                    <img src="https://w7.pngwing.com/pngs/345/591/png-transparent-phonepe-hd-logo-thumbnail.png" alt="PhonePe" />
-                    <span>PhonePe</span>
-                  </div>
-                  <div
-                    className={`payment-method animate-slide-up ${selectedPaymentMethod === "Cash" ? "selected" : ""}`}
-                    onClick={() => handlePaymentMethodSelect("Cash")}
-                  >
-                    <span className="cash-icon">💵</span>
-                    <span>Cash</span>
-                  </div>
-                  <div
-                    className={`payment-method animate-slide-up ${selectedPaymentMethod === "Card" ? "selected" : ""}`}
-                    onClick={() => handlePaymentMethodSelect("Card")}
-                  >
-                    <span className="card-icon">💳</span>
-                    <span>Credit/Debit Card</span>
-                  </div>
-                </div>
-                {selectedPaymentMethod === "Card" && (
-                  <div className="card-form animate-slide-in">
-                    <h3>Card Details</h3>
-                    <div className="form-group">
-                      <label htmlFor="cardNumber">Card Number</label>
-                      <input
-                        type="text"
-                        id="cardNumber"
-                        name="cardNumber"
-                        value={cardDetails.cardNumber}
-                        onChange={handleCardInputChange}
-                        placeholder="1234 5678 9012 3456"
-                        maxLength="19"
-                      />
-                    </div>
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="expiry">Expiry Date</label>
-                        <input
-                          type="text"
-                          id="expiry"
-                          name="expiry"
-                          value={cardDetails.expiry}
-                          onChange={handleCardInputChange}
-                          placeholder="MM/YY"
-                          maxLength="5"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="cvv">CVV</label>
-                        <input
-                          type="text"
-                          id="cvv"
-                          name="cvv"
-                          value={cardDetails.cvv}
-                          onChange={handleCardInputChange}
-                          placeholder="123"
-                          maxLength="3"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="cardHolder">Card Holder Name</label>
-                      <input
-                        type="text"
-                        id="cardHolder"
-                        name="cardHolder"
-                        value={cardDetails.cardHolder}
-                        onChange={handleCardInputChange}
-                        placeholder="John Doe"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-              {showBookRideButton && (
-                <button className="cta-button animate-pulse" onClick={handleBookRide}>
-                  Book Ride
-                </button>
-              )}
+      <div className="payment-header">
+        <div className="header-content">
+          <h1>Complete Payment</h1>
+          <p className="header-subtitle">Secure payment for your ride</p>
+        </div>
+      </div>
+
+      <div className="payment-container">
+        <div className="payment-content">
+          {/* Booking Summary */}
+          <div className="booking-summary">
+            <h2>
+              <span className="summary-icon">📋</span> Ride Summary
+            </h2>
+            <div className="summary-item">
+              <span>Pickup:</span>
+              <strong>{pickupLocation?.place_name || "Not specified"}</strong>
+            </div>
+            <div className="summary-item">
+              <span>Drop:</span>
+              <strong>{dropLocation?.place_name || "Not specified"}</strong>
+            </div>
+            <div className="summary-item">
+              <span>Service:</span>
+              <strong>{selectedService || "Not specified"}</strong>
+            </div>
+            <div className="summary-item price">
+              <span>Amount to Pay:</span>
+              <strong className="price-value">{fixedPrice}</strong>
             </div>
           </div>
+
+          {/* Payment Methods */}
+          <div className="payment-methods">
+            <h2>
+              <span className="payment-icon">💳</span> Choose Payment Method
+            </h2>
+            <div className="method-grid">
+              {["GPay", "Paytm", "PhonePe", "Cash", "Card"].map((method) => (
+                <div
+                  key={method}
+                  className={`method-option ${selectedPaymentMethod === method ? "selected" : ""}`}
+                  onClick={() => handlePaymentMethodSelect(method)}
+                >
+                  <div className="method-icon">
+                    {method === "Cash" ? (
+                      <span className="cash-icon">💵</span>
+                    ) : method === "Card" ? (
+                      <span className="card-icon">💳</span>
+                    ) : (
+                      <img
+                        src={
+                          method === "GPay"
+                            ? "https://lh3.googleusercontent.com/cL0-sGY6d5KaZFLOYuM_Q7-jjtBMa4kWFH63P_SkulwLOeJ0RlsPSIFreR6K6np2n_Q_JSiZbSYmwGteTPNQ6M07II1bo_S6HJ4yFkE=rw-s0"
+                            : method === "Paytm"
+                            ? "https://upload.wikimedia.org/wikipedia/commons/4/42/Paytm_logo.png"
+                            : "https://w7.pngwing.com/pngs/345/591/png-transparent-phonepe-hd-logo-thumbnail.png"
+                        }
+                        alt={method}
+                      />
+                    )}
+                  </div>
+                  <span className="method-name">
+                    {method === "Card" ? "Credit/Debit Card" : method}
+                  </span>
+                  {selectedPaymentMethod === method && (
+                    <span className="checkmark">✓</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card Form */}
+          {selectedPaymentMethod === "Card" && (
+            <div className="card-form">
+              <h3>
+                <span className="card-form-icon">🔒</span> Enter Card Details
+              </h3>
+              <div className="form-group">
+                <label>Card Number</label>
+                <input
+                  type="text"
+                  name="cardNumber"
+                  value={cardDetails.cardNumber}
+                  onChange={handleCardInputChange}
+                  placeholder="1234 5678 9012 3456"
+                  maxLength="19"
+                  className={formErrors.cardNumber ? "error-input" : ""}
+                />
+                {formErrors.cardNumber && (
+                  <span className="error">{formErrors.cardNumber}</span>
+                )}
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Expiry Date</label>
+                  <input
+                    type="text"
+                    name="expiry"
+                    value={cardDetails.expiry}
+                    onChange={handleCardInputChange}
+                    placeholder="MM/YY"
+                    maxLength="5"
+                    className={formErrors.expiry ? "error-input" : ""}
+                  />
+                  {formErrors.expiry && (
+                    <span className="error">{formErrors.expiry}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label>CVV</label>
+                  <div className="cvv-container">
+                    <input
+                      type="password"
+                      name="cvv"
+                      value={cardDetails.cvv}
+                      onChange={handleCardInputChange}
+                      placeholder="123"
+                      maxLength="3"
+                      className={formErrors.cvv ? "error-input" : ""}
+                    />
+                    <span className="cvv-info">ⓘ</span>
+                  </div>
+                  {formErrors.cvv && (
+                    <span className="error">{formErrors.cvv}</span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group">
+                <label>Card Holder Name</label>
+                <input
+                  type="text"
+                  name="cardHolder"
+                  value={cardDetails.cardHolder}
+                  onChange={handleCardInputChange}
+                  placeholder="John Doe"
+                  className={formErrors.cardHolder ? "error-input" : ""}
+                />
+                {formErrors.cardHolder && (
+                  <span className="error">{formErrors.cardHolder}</span>
+                )}
+              </div>
+              <div className="security-info">
+                <span className="lock-icon">🔒</span>
+                <span>Your payment is secure and encrypted</span>
+              </div>
+            </div>
+          )}
         </div>
+
+        {/* Book Ride Button */}
+        {canBookRide && (
+          <div className="book-button-container">
+            <button className="book-button" onClick={handleBookRide}>
+              Pay {fixedPrice} & Confirm Ride
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

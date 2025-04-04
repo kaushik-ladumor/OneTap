@@ -1,124 +1,182 @@
-import React from "react";
-import { NavLink } from "react-router-dom"; // Use NavLink instead of Link
+import React, { useState, useRef, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+import { FiUser, FiLogOut, FiLogIn, FiUserPlus, FiChevronDown, FiMenu } from "react-icons/fi";
+import '../styles/Navbar.css'
 
 function Navbar() {
+  const navigate = useNavigate();
+  const { isAuthenticated, username, logout } = useAuth();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("loggedInUser");
+    logout();
+    navigate("/");
+    setShowDropdown(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+      
+      // Close mobile menu when clicking outside
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && 
+          !event.target.closest('.mobile-menu-toggle')) {
+        setMobileMenuOpen(false);
+      }
+    };
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light" // Changed to navbar-light
-      style={{
-        background: "#f8f9fa", // Light background color
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow
-      }}
-    >
-      <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-          OneTap
+    <nav className="app-navbar">
+      <div className="navbar-container">
+        {/* Logo on the left with proper spacing */}
+        <NavLink className="navbar-brand" to="/">
+          <span className="brand-logo">OneTap</span>
         </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+        
+        {/* Mobile menu toggle button */}
+        <button 
+          className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle navigation menu"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/food"
-                style={({ isActive }) => ({
-                  fontSize: "1.1rem",
-                  color: isActive ? "#6a11cb" : "#333", // Active link color
-                  fontWeight: isActive ? "bold" : "normal", // Active link bold
-                })}
+
+        {/* Right-aligned navigation with perfect spacing */}
+        <div className="navbar-right-section">
+          <div className={`main-nav-links ${mobileMenuOpen ? 'show' : ''}`} ref={mobileMenuRef}>
+            {["Food", "Transport", "Movies"].map((item) => (
+              <NavLink 
+                key={item} 
+                to={`/${item.toLowerCase()}`}
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={() => setMobileMenuOpen(false)}
               >
-                Food
+                {item}
               </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/transport"
-                style={({ isActive }) => ({
-                  fontSize: "1.1rem",
-                  color: isActive ? "#6a11cb" : "#333", // Active link color
-                  fontWeight: isActive ? "bold" : "normal", // Active link bold
-                })}
-              >
-                Transport
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/movies"
-                style={({ isActive }) => ({
-                  fontSize: "1.1rem",
-                  color: isActive ? "#6a11cb" : "#333", // Active link color
-                  fontWeight: isActive ? "bold" : "normal", // Active link bold
-                })}
-              >
-                Movies
-              </NavLink>
-            </li>
-            <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link dropdown-toggle"
-                to="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                style={{ fontSize: "1.1rem", color: "#333" }}
-              >
-                Account
-              </NavLink>
-              <ul
-                className="dropdown-menu"
-                aria-labelledby="navbarDropdown"
-                style={{
-                  background: "#ffffff", // White background for dropdown
-                  border: "none",
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow
-                }}
-              >
-                <li>
-                  <NavLink
-                    className="dropdown-item"
+            ))}
+            
+            {/* Account options in mobile menu */}
+            <div className="mobile-account-section">
+              {isAuthenticated ? (
+                <>
+                  <div className="mobile-user-profile">
+                    <span className="user-avatar mobile">
+                      {username.charAt(0).toUpperCase()}
+                    </span>
+                    <span className="username">{username}</span>
+                  </div>
+                  <button className="mobile-dropdown-item logout-btn" onClick={handleLogout}>
+                    <FiLogOut className="icon" />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink 
+                    className="mobile-dropdown-item" 
                     to="/login"
-                    style={({ isActive }) => ({
-                      fontSize: "1rem",
-                      color: isActive ? "#6a11cb" : "#333", // Active link color
-                      fontWeight: isActive ? "bold" : "normal", // Active link bold
-                    })}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
-                    Login
+                    <FiLogIn className="icon" />
+                    <span>Login</span>
                   </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="dropdown-item"
+                  <NavLink 
+                    className="mobile-dropdown-item signup-btn" 
                     to="/signup"
-                    style={({ isActive }) => ({
-                      fontSize: "1rem",
-                      color: isActive ? "#6a11cb" : "#333", // Active link color
-                      fontWeight: isActive ? "bold" : "normal", // Active link bold
-                    })}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
-                    Signup
+                    <FiUserPlus className="icon" />
+                    <span>Sign Up</span>
                   </NavLink>
-                </li>
-              </ul>
-            </li>
-          </ul>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Account dropdown with clean spacing */}
+          <div className="account-section" ref={dropdownRef}>
+            <button 
+              className="account-toggle-btn"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              {isAuthenticated ? (
+                <div className="user-profile">
+                  <span className="user-avatar">
+                    {username.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="username">{username}</span>
+                  <FiChevronDown className={`dropdown-icon ${showDropdown ? 'rotate' : ''}`} />
+                </div>
+              ) : (
+                <div className="auth-options">
+                  <FiUser className="user-icon" />
+                  <span>Account</span>
+                  <FiChevronDown className={`dropdown-icon ${showDropdown ? 'rotate' : ''}`} />
+                </div>
+              )}
+            </button>
+
+            {/* Dropdown menu with perfect alignment */}
+            {showDropdown && (
+              <div className="account-dropdown-menu">
+                {isAuthenticated ? (
+                  <>
+                    <div className="user-profile-card">
+                      <span className="user-avatar large">
+                        {username.charAt(0).toUpperCase()}
+                      </span>
+                      <div className="user-details">
+                        <span className="user-name">{username}</span>
+                        <span className="user-email">user@example.com</span>
+                      </div>
+                    </div>
+                    <button className="dropdown-item logout-btn" onClick={handleLogout}>
+                      <FiLogOut className="icon" />
+                      <span>Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <NavLink 
+                      className="dropdown-item login-item" 
+                      to="/login"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <FiLogIn className="icon" />
+                      <span>Login</span>
+                    </NavLink>
+                    <NavLink 
+                      className="dropdown-item signup-btn" 
+                      to="/signup"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <FiUserPlus className="icon" />
+                      <span>Sign Up</span>
+                    </NavLink>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

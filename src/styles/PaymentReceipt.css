@@ -1,0 +1,193 @@
+/* Container Styles */
+.payment-receipt-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.payment-receipt-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 30px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Header Styles */
+.payment-receipt-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.payment-receipt-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.payment-receipt-subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Layout Styles */
+.payment-receipt-layout {
+  display: flex;
+  gap: 30px;
+}
+
+.payment-receipt-left {
+  flex: 1;
+  padding-right: 20px;
+  border-right: 1px dashed #e0e0e0;
+}
+
+.payment-receipt-right {
+  flex: 1;
+  padding-left: 20px;
+}
+
+/* Restaurant Info */
+.payment-receipt-restaurant {
+  margin-bottom: 25px;
+}
+
+.payment-receipt-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.payment-receipt-delivery {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-receipt-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.payment-receipt-icon {
+  color: #666;
+}
+
+/* Order Items */
+.payment-receipt-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.payment-receipt-items {
+  margin-bottom: 20px;
+}
+
+.payment-receipt-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.payment-receipt-item-name {
+  color: #444;
+}
+
+.payment-receipt-item-price {
+  font-weight: 500;
+}
+
+/* Payment Details */
+.payment-receipt-payment {
+  margin-bottom: 25px;
+}
+
+.payment-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.payment-receipt-total {
+  border-top: 1px solid #e0e0e0;
+  margin-top: 8px;
+  padding-top: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Address */
+.payment-receipt-address {
+  margin-bottom: 25px;
+}
+
+.payment-receipt-address-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Button */
+.payment-receipt-button {
+  display: block;
+  text-align: center;
+  background-color: #e23744;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+/* Error State */
+.payment-receipt-error {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.payment-receipt-error-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.payment-receipt-home-link {
+  color: #e23744;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-receipt-layout {
+    flex-direction: column;
+  }
+  
+  .payment-receipt-left {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 20px;
+  }
+  
+  .payment-receipt-right {
+    padding-left: 0;
+    padding-top: 20px;
+  }
+}

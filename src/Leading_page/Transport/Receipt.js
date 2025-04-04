@@ -1,143 +1,198 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import styled from "styled-components";
+  import React from "react";
+  import { useLocation, useNavigate } from "react-router-dom";
+  import styled from "styled-components";
+  import { FaCheckCircle, FaHome, FaShareAlt } from "react-icons/fa";
 
-// Styled Components
-const ReceiptPage = styled.div`
-  min-height: 100vh;
-  width: 100vw; /* Full width */
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-`;
-
-const Title = styled.h1`
-  color: #d2cb16; /* First yellow shade */
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-  
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-`;
-
-const ReceiptCard = styled.div`
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  width: 100%; /* Full width of parent */
-  max-width: 900px; /* Increased max-width for more space */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  @media (max-width: 480px) {
-    padding: 1.5rem;
-  }
-`;
-
-const Subtitle = styled.h2`
-  color: #e8e809; /* Second yellow shade */
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #e8e809;
-  padding-bottom: 0.5rem;
-`;
-
-const DetailItem = styled.p`
-  margin: 0.8rem 0;
-  font-size: 1.1rem;
-  color: #2c3e50;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px dashed #ecf0f1;
-  padding-bottom: 0.5rem;
-
-  strong {
-    color: #d2cb16; /* First yellow shade for contrast */
-    font-weight: 600;
-    min-width: 150px; /* Increased for spacing */
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
+  // Styled Components
+  const ReceiptContainer = styled.div`
+    min-height: 100vh;
+    background: #f8f8f8;
+    padding: 20px;
+    display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    overflow: hidden; /* Prevent scroll bars */
+  `;
+
+  const Header = styled.div`
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 10px;
+  `;
+
+  const SuccessIcon = styled.div`
+    font-size: 60px;
+    color: #34C759;
+    margin-bottom: 15px;
+  `;
+
+  const HeaderTitle = styled.h1`
+    color: #333;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+  `;
+
+  const HeaderSubtitle = styled.p`
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+  `;
+
+  const ReceiptCard = styled.div`
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+  `;
+
+  const ReceiptTitle = styled.h2`
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+  `;
+
+  const DetailRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #f0f0f0;
+  `;
+
+  const DetailLabel = styled.span`
+    color: #666;
+    font-weight: 500;
+    font-size: 15px;
+  `;
+
+  const DetailValue = styled.span`
+    color: #333;
+    font-weight: 600;
+    font-size: 15px;
+  `;
+
+  const PriceValue = styled(DetailValue)`
+    color: #FFD700; /* Yellow color for price */
+    font-size: 18px;
+    font-weight: 700;
+  `;
+
+  const ButtonRow = styled.div`
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    gap: 12px;
+    justify-content: space-between;
+  `;
+
+  const ActionButton = styled.button`
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+  `;
+
+  const ShareButton = styled(ActionButton)`
+    background: white;
+    color: #333;
+    border: 1px solid #e0e0e0;
+  `;
+
+  const HomeButton = styled(ActionButton)`
+    background: #FFD700; /* Yellow color */
+    color: #333;
+  `;
+
+  function Receipt() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { receipt } = location.state || {};
+
+    const handleShare = () => {
+      if (navigator.share) {
+        navigator.share({
+          title: 'My Ride Receipt',
+          text: `I just booked a ${receipt?.service} ride from ${receipt?.pickupLocation} to ${receipt?.dropLocation}`,
+        });
+      } else {
+        alert('Share functionality not available in your browser');
+      }
+    };
+
+    return (
+      <ReceiptContainer>
+        <Header>
+          <SuccessIcon>
+            <FaCheckCircle />
+          </SuccessIcon>
+          <HeaderTitle>Booking Confirmed!</HeaderTitle>
+          <HeaderSubtitle>Your ride is on the way</HeaderSubtitle>
+        </Header>
+
+        <ReceiptCard>
+          <ReceiptTitle>Ride Details</ReceiptTitle>
+          
+          <DetailRow>
+            <DetailLabel>Booking ID</DetailLabel>
+            <DetailValue>#{receipt?.id || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow>
+            <DetailLabel>Pickup</DetailLabel>
+            <DetailValue>{receipt?.pickupLocation || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow>
+            <DetailLabel>Drop</DetailLabel>
+            <DetailValue>{receipt?.dropLocation || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow>
+            <DetailLabel>Service</DetailLabel>
+            <DetailValue>{receipt?.service || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow>
+            <DetailLabel>Payment</DetailLabel>
+            <DetailValue>{receipt?.paymentMethod || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow>
+            <DetailLabel>Date & Time</DetailLabel>
+            <DetailValue>{receipt?.date || "N/A"}</DetailValue>
+          </DetailRow>
+          
+          <DetailRow style={{ borderBottom: 'none' }}>
+            <DetailLabel>Amount</DetailLabel>
+            <PriceValue>{receipt?.price || "N/A"}</PriceValue>
+          </DetailRow>
+        </ReceiptCard>
+
+        <ButtonRow>
+          <ShareButton onClick={handleShare}>
+            <FaShareAlt /> Share
+          </ShareButton>
+          <HomeButton onClick={() => navigate("/")}>
+            <FaHome /> Home
+          </HomeButton>
+        </ButtonRow>
+      </ReceiptContainer>
+    );
   }
-`;
 
-const CTAButton = styled.button`
-  margin-top: 2rem;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: white;
-  background: #e8e809; /* Second yellow shade for button */
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 100%; /* Full width button */
-
-  &:hover {
-    background: #d2cb16; /* First yellow shade on hover */
-    transform: scale(1.02); /* Slightly reduced scale for full-width */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-  }
-`;
-
-function Receipt() {
-  const location = useLocation();
-  const { receipt } = location.state || {};
-
-  return (
-    <ReceiptPage className="receipt-page">
-      <Title>Booking Confirmed</Title>
-      <ReceiptCard className="receipt-details">
-        <Subtitle>Receipt</Subtitle>
-        <DetailItem>
-          <strong>Booking ID:</strong> <span>{receipt?.id || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Pickup:</strong> <span>{receipt?.pickupLocation || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Drop:</strong> <span>{receipt?.dropLocation || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Service:</strong> <span>{receipt?.service || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Price:</strong> <span>{receipt?.price || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Payment Method:</strong> <span>{receipt?.paymentMethod || "N/A"}</span>
-        </DetailItem>
-        <DetailItem>
-          <strong>Date:</strong> <span>{receipt?.date || "N/A"}</span>
-        </DetailItem>
-      </ReceiptCard>
-      <CTAButton onClick={() => (window.location.href = "/")}>
-        Back to Home
-      </ CTAButton>
-    </ReceiptPage>
-  );
-}
-
-export default Receipt;
+  export default Receipt;
