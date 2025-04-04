@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Star, Calendar, MapPin, User } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
+import { getRandomImdbKey } from "../../config";
 import "../../styles/MovieDetails.css";
 
 const MovieDetails = () => {
@@ -29,12 +30,8 @@ const MovieDetails = () => {
   const [showTierModal, setShowTierModal] = useState(false);
   const [selectedCinema, setSelectedCinema] = useState(null);
 
-  const imdb_keys = [
-    '4b447405', 'eb0c0475', '7776cbde', 'ff28f90b', '6c3a2d45',
-    'b07b58c8', 'ad04b643', 'a95b5205', '777d9323', '2c2c3314',
-    'b5cff164', '89a9f57d', '73a9858a', 'efbd8357'
-  ];
-  const API_KEY = imdb_keys[Math.floor(Math.random() * imdb_keys.length)];
+  // Using API key from environment variables via config
+  const API_KEY = getRandomImdbKey();
 
   const mockCinemas = [
     { id: 1, name: "Cinepolis: Ahmedabad", location: "Ahmedabad", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScftfux7rQxwUP2DBz4KBaVNfrA9XV8KwVZw&s", rating: 4.5 },

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Star, Calendar, Search, MapPin } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { OMDB_API_KEY } from "../../config";
 import "../../styles/movie.css";
 
 const Movies = () => {
@@ -21,7 +22,8 @@ const Movies = () => {
   const [showEmptySearchPopup, setShowEmptySearchPopup] = useState(false);
   const navigate = useNavigate();
 
-  const API_KEY = "91779228";
+  // Using API key from environment variables via config
+  const API_KEY = OMDB_API_KEY;
 
   const mainCities = [
     { name: "Ahmedabad", icon: "📍" },
